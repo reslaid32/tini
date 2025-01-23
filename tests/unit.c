@@ -110,12 +110,10 @@ void test_tini_dump() {
     assert(file != NULL && "Failed to create temporary file for dumping INI data");
     bool dumped = tini_dump(&ini, file);
     rewind(file); // Rewind after writing
-    fclose(file);
 
     // Verify the dump was successful by reading back
     assert(dumped == true && "INI dump should be successful");
 
-    file = tmpfile();
     assert(file != NULL && "Failed to open dumped file for reading");
 
     // Open the dumped file and verify its content
@@ -144,10 +142,33 @@ void test_tini_dump() {
     printf("test_tini_dump passed\n");
 }
 
+// Test tini_remove, tini_has
+void test_tini_remove() {
+    Tini ini;
+    tini_init(&ini);
+
+    tini_set(&ini, "section1", "key1", "value1");
+    tini_set(&ini, "section1", "key2", "value2");
+
+    bool key1_exists = tini_has(&ini, "section1", "key1");
+    bool key2_exists = tini_has(&ini, "section1", "key2");
+
+    assert(key1_exists == true && "key1 in section1 should exist");
+    assert(key2_exists == true && "key2 in section1 should exist");
+
+    tini_remove(&ini, "section1", "key2");
+    key2_exists = tini_has(&ini, "section1", "key2");
+
+    assert(key2_exists == false && "key2 in section1 should not exist after removing");
+
+    printf("test_tini_remove passed\n");
+}
+
 void rununit() {
     test_tini_init();
     test_tini_load();
     test_tini_get();
     test_tini_set();
     test_tini_dump();
+    test_tini_remove();
 }

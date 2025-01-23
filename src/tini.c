@@ -1,4 +1,5 @@
 #include "tini.h"
+
 #include <string.h>
 #include <ctype.h>
 
@@ -111,4 +112,28 @@ bool tini_dump(Tini *ini, FILE *file) {
     }
 
     return true;
+}
+
+TINI_EX_FUNC bool tini_has(Tini *ini, const char *section, const char *key) {
+    for (int i = 0; i < ini->count; i++) {
+        if (strcmp(ini->entries[i].section, section) == 0 &&
+            strcmp(ini->entries[i].key, key) == 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+TINI_EX_FUNC bool tini_remove(Tini *ini, const char *section, const char *key) {
+    for (int i = 0; i < ini->count; i++) {
+        if (strcmp(ini->entries[i].section, section) == 0 &&
+            strcmp(ini->entries[i].key, key) == 0) {
+            for (int j = i; j < ini->count - 1; j++) {
+                ini->entries[j] = ini->entries[j + 1];
+            }
+            ini->count--;
+            return true;
+        }
+    }
+    return false;
 }

@@ -127,6 +127,26 @@ TINI_EX_FUNC bool tini_set(Tini *ini, const char *section, const char *key, cons
  */
 TINI_EX_FUNC bool tini_dump(Tini *ini, FILE *file);
 
+/**
+ * @brief Checks if a section and key exist in the Tini structure.
+ * 
+ * @param ini Pointer to a Tini structure.
+ * @param section Name of the section.
+ * @param key Name of the key.
+ * @return true if the section and key exist, false otherwise.
+ */
+TINI_EX_FUNC bool tini_has(Tini *ini, const char *section, const char *key);
+
+/**
+ * @brief Removes a key-value pair from a specific section in the Tini structure.
+ * 
+ * @param ini Pointer to a Tini structure.
+ * @param section Name of the section.
+ * @param key Name of the key.
+ * @return true if the key-value pair was removed successfully, false otherwise.
+ */
+TINI_EX_FUNC bool tini_remove(Tini *ini, const char *section, const char *key);
+
 /* Extern C for C++: End */
 TINI_EXTERN_C_END
 
