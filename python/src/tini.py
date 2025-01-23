@@ -2,6 +2,8 @@ import os
 import ctypes
 from ctypes import c_char, c_char_p, c_int, c_bool, POINTER
 
+TINI_ROOT_SECTION = "@$ROOT$@"
+
 _M_libtini_ffi = None
 _libtini_force_path = None
 
